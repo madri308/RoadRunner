@@ -2,7 +2,9 @@
 #define ROADRUNNER_GENETICALGORITHM_H
 
 #include "Calculator.h"
-class GeneticAlgorithm {
+#include "Individual.h"
+#include "iConstants.h"
+class GeneticAlgorithm: public iConstants {
 
 public:
     int populationLength;
@@ -11,10 +13,10 @@ public:
     float killPercentage;
     int individualsKilled;
     Calculator calculator;
-
+    std::vector<Individual*> population;
     void generateInitialPopulation();
     void fitness();
-    void cross();
+    void crossover();
     int killIndividuals();
     void start();
 };

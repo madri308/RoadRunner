@@ -6,6 +6,7 @@
 
 class Calculator {
 public:
+    Calculator();
     int calculateDistanceToLimit(float angle , std::vector<float> point);
     std::vector<float> calculateNewPosition(std::vector<float> point , float angle , float distance);
 };
