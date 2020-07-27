@@ -3,8 +3,10 @@
 
 #include <iostream>
 #include <vector>
+#include <math.h>
+#include "iConstants.h"
 
-class Calculator {
+class Calculator:public iConstants {
 public:
     Calculator();
     int calculateDistanceToLimit(float angle , std::vector<float> point);

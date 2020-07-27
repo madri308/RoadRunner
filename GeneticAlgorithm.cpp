@@ -8,7 +8,7 @@
 void GeneticAlgorithm::generateInitialPopulation() {
     for(int individualID = 0 ; individualID < populationLength; individualID++){
         Individual *newIndividual = new Individual();
-        newIndividual->addPosition(startPoint);
+        newIndividual->addPosition(START_POINT);
         float lastSensor = 0;
         for(int sensor = 0 ; sensor < sensorsQuantity ; sensor++){
             float newSensor = (rand() % 180) + lastSensor;
@@ -56,7 +56,7 @@ void GeneticAlgorithm::crossover() {
         for(int sensorID = 0 ; sensorID < sensorsQuantity ; sensorID++){
             float newSensor = (rand() % int(sensorsA.at(sensorID).at(0))) + sensorsB.at(sensorID).at(0);
             newIndividual->addSensor(newSensor);
-            int distance = calculator.calculateDistanceToLimit(newSensor,parentsPositionAvrg);
+            float distance = calculator.calculateDistanceToLimit(newSensor,parentsPositionAvrg);
             if(distance > forQueue.at(3)){
                 forQueue.at(0) = parentsPositionAvrg.at(0);
                 forQueue.at(1) = parentsPositionAvrg.at(1);
