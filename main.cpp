@@ -8,6 +8,7 @@
 #include <cstdlib>
 #include <omp.h>
 #include "Instructions.h"
+#include "ConfigurationTester.h"
 int mayor = 0;
 void Hello(int n){
     int my_rank = omp_get_thread_num();
@@ -52,6 +53,9 @@ int main(int argc,char* argv[]) {
     instructions->createTxt();
     return 0;
      */
+    //DRIVER CODE
+    ConfigurationTester *configurationTester = new ConfigurationTester();
+    configurationTester->test();
 }
 
 #pragma clang diagnostic pop

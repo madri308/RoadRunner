@@ -9,7 +9,7 @@ Calculator::Calculator() {
 }
 //Calcula la distancia entre un punto y el limite, evaluando todos los puntos de la linea
 //con los puntos del limite, hasta que lo ecnuentre entonces saca distancia entre puntos.
-int Calculator::calculateDistanceToLimit(float angle, std::vector<float> point) {
+float Calculator::calculateDistanceToLimit(float angle, std::vector<float> point) {
 
     //GUARDA PUNTO INICIAL Y FINAL DE LA LINEA.
     std::vector<float> startPoint = point;

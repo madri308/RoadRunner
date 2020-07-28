@@ -1,0 +1,4 @@
+1.Como funciona la funcion dinamica.
+2.Como funcionaria el queue de instrucciones.
+3.Comparacion con el final en el fitness.
+4.Como decido la posicion del hijo.

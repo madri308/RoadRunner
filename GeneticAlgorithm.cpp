@@ -8,13 +8,13 @@
 //sensores aleatorios y posicion inicial.
 void GeneticAlgorithm::generateInitialPopulation() {
     for(int individualID = 0 ; individualID < configuration->populationLength; individualID++){
-        Individual *newIndividual = new Individual();
-        newIndividual->addPosition(START_POINT);
+        Individual *initialIndividual = new Individual();
+        initialIndividual->addPosition(START_POINT);
         float lastSensor = 0;
         for(int sensor = 0 ; sensor < configuration->sensorsQuantity ; sensor++){
             float newSensor = (rand() % 180) + lastSensor;
-            newIndividual->addSensor(newSensor);
-            population.push_back(newIndividual);
+            initialIndividual->addSensor(newSensor);
+            population.push_back(initialIndividual);
             lastSensor = newSensor;
         }
     }
@@ -26,7 +26,7 @@ void GeneticAlgorithm::fitness() {
         Individual *individual = population.at(individualID);
         for(int sensorID = 0 ; sensorID < individual->sensors.size() ; sensorID++){
             std::vector<float> sensor = individual->sensors.at(sensorID);
-            int distance = calculator.calculateDistanceToLimit(sensor.at(0),individual->position);//FALTA LO DE EVALUAR CON EL FINAL
+            float distance = calculator.calculateDistanceToLimit(sensor.at(0),individual->position);//FALTA LO DE EVALUAR CON EL FINAL
             sensor.at(1) = distance;
             individual->fitness += distance;
         }

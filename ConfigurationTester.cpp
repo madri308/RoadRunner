@@ -30,6 +30,7 @@ void ConfigurationTester::test() {
             }
         }
         compareWithBestMatroid(matroid);
+        //CREAR NUEVOS RANGOS EN BASE AL MATROID ANTERIOR
         testQuantity += 1;
     }
 }
