@@ -4,14 +4,16 @@
 #include "Calculator.h"
 #include "Individual.h"
 #include "iConstants.h"
+#include "Configuration.h"
+
 class GeneticAlgorithm: public iConstants {
 
 public:
-    int populationLength;
-    int sensorsQuantity;
-    int generationQuantity;
-    float killPercentage;
+    GeneticAlgorithm(Configuration *configuration);
+
+    float score;
     int individualsKilled;
+    Configuration *configuration;
     Calculator calculator;
     std::vector<Individual*> population;
     void generateInitialPopulation();

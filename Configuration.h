@@ -7,14 +7,14 @@
 
 
 #include <vector>
-#include "Configuration.h"
 
 class Configuration {
 public:
-    std::vector<int> populationLength;
-    std::vector<int> sensorsQuantity;
-    std::vector<int> generationQuantity;
-    std::vector<float> killPercentage;
+    Configuration(int populationLength, int sensorsQuantity, int generationQuantity, float killPercentage);
+    int populationLength;
+    int sensorsQuantity;
+    int generationQuantity;
+    float killPercentage;
 };
 
 

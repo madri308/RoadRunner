@@ -7,7 +7,8 @@
 Calculator::Calculator() {
 
 }
-//CALCULA LA DISTANCIA HASTA EL LIMITE, EVALUANDO LOS PUNTOS DE UNA LINEA CON LOS DE LOS LIMITE.
+//Calcula la distancia entre un punto y el limite, evaluando todos los puntos de la linea
+//con los puntos del limite, hasta que lo ecnuentre entonces saca distancia entre puntos.
 int Calculator::calculateDistanceToLimit(float angle, std::vector<float> point) {
 
     //GUARDA PUNTO INICIAL Y FINAL DE LA LINEA.
@@ -25,7 +26,7 @@ int Calculator::calculateDistanceToLimit(float angle, std::vector<float> point) 
     while(true){
         limitPoint.at(1) = slope*limitPoint.at(0) + b;
         auto pairs = LIMIT_POINTS.equal_range(limitPoint.at(0));
-        for(auto pair = pairs.first ; pair != pairs.second ; ++pair){
+        for(auto pair = pairs.first ; pair != pairs.second ; pair++){
             if(pair->second == limitPoint.at(1)){
                 found = true;
             }
@@ -38,7 +39,9 @@ int Calculator::calculateDistanceToLimit(float angle, std::vector<float> point) 
     }
     return sqrt(pow((limitPoint.at(0)-startPoint.at(0)),2) + pow((limitPoint.at(1)-startPoint.at(1)),2));
 }
-//https://stackoverflow.com/questions/50311279/how-can-i-find-end-point-using-start-point-angle-and-distance/50318756#50318756
+//Calcula un nuevo punto en base a un punto inicial, un angulo y una distancia con
+//razones trigonometricas.
+// https://stackoverflow.com/questions/50311279/how-can-i-find-end-point-using-start-point-angle-and-distance/50318756#50318756
 std::vector<float> Calculator::calculateNewPosition(std::vector<float> point, float angle, float distance) {
     float angle_rad = angle * 3.1415927f / 180.0f;
     float oppositeSide = sin(angle_rad)*distance;

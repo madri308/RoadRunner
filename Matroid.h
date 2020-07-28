@@ -5,16 +5,16 @@
 #ifndef ROADRUNNER_MATROID_H
 #define ROADRUNNER_MATROID_H
 
-
+#include "Configuration.h"
+#include "GeneticAlgorithm.h"
 #include <vector>
 
 class Matroid {
 public:
-    std::vector<std::vector<float>> configurationsList;
-    std::vector<int> bestConfiguration;
-
-    void insertConfiguration();
-    void insertBestConfiguration();
+    Matroid();
+    std::vector<Configuration*> configurationsList;
+    GeneticAlgorithm *bestGeneticAlgorithm;
+    void compareWithBestGA(GeneticAlgorithm *geneticAlgorithm);
 };
 
 
