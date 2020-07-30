@@ -53,9 +53,33 @@ int main(int argc,char* argv[]) {
     instructions->createTxt();
     return 0;
      */
+    //TEST DE ORDENAR Y SACAR MAYOR
+    /*
+    auto *parentA = new Individual();
+    parentA->fitness = 40;
+    Individual *parentB = new Individual();
+    parentB->fitness = 1000;
+    auto *parentC = new Individual();
+    parentC->fitness = 5;
+    Individual *parentD = new Individual();
+    parentD->fitness = 200;
+    std::vector<Individual*> parents{parentA,parentB,parentC,parentD};
+    std::cout <<parents.at(3)->fitness<< std::endl;
+    std::sort(parents.begin(),parents.end(),[](Individual *a,Individual *b){
+        return a->fitness > b->fitness;
+    });
+    std::cout <<parents.at(0)->fitness<< std::endl;
+    */
+    //TEST LIMITES
+
+    iConstants *iconstants = new iConstants();
+    iconstants->getLimits();
+    iconstants->printLimits();
+
     //DRIVER CODE
+    /*
     ConfigurationTester *configurationTester = new ConfigurationTester();
-    configurationTester->test();
+    configurationTester->test();*/
 }
 
 #pragma clang diagnostic pop

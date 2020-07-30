@@ -16,6 +16,9 @@ public:
     float MAX_SIZE_LINE = 2000;//medida de la diagonal que se forma en el rectangulo de ancho maximo(872) y largo maximo(1800)
     int CONFIGURATIONS_QUANTITY = 10;
     int MAX_TEST_QUANTITY = 10;
+    int END_POINT = 1800;
+    void getLimits();
+    void printLimits();
 };
 
 

@@ -13,5 +13,8 @@ void Individual::addPosition(std::vector<float> position) {
 }
 
 Individual::Individual() {
+}
 
+void Individual::setStepsQueue(std::vector<std::vector<float>> *queue) {
+    this->stepsQueue = queue;
 }

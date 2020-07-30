@@ -1,4 +1,9 @@
 1.Como funciona la funcion dinamica.
+Mi funcion dinamica solo retorna un matroid, para generar ese matroid entonces yo consigo un criterio para 
+sacar las configuraciones, dicho criterio basado en la funcion del voraz.
 2.Como funcionaria el queue de instrucciones.
+Agarra la cola del mejor papa y listo.
 3.Comparacion con el final en el fitness.
 4.Como decido la posicion del hijo.
+Agarra la posicion del mejor papa, y apartir de ahi me muevo.
+ 	
