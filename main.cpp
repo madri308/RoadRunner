@@ -72,9 +72,20 @@ int main(int argc,char* argv[]) {
     */
     //TEST LIMITES
 
-    iConstants *iconstants = new iConstants();
+    /*iConstants *iconstants = new iConstants();
     iconstants->getLimits();
-    iconstants->printLimits();
+    iconstants->printLimits();*/
+    srand((int)time(0));
+
+    Configuration *configuration = new Configuration(4,3,2,50,{10,160});
+    GeneticAlgorithm *ga = new GeneticAlgorithm(configuration);
+    //printf("poblacion: %d sensores: %d generaciones: %d muerte: %f\n",ga->configuration->populationLength,ga->configuration->sensorsQuantity,ga->configuration->generationQuantity,ga->configuration->killPercentage);
+    Individual *best = ga->start();
+    //std::cout<<ga->population.size()<<std::endl;
+    /*for(int i = 0 ; i < best->stepsQueue->size() ; i++){
+        std::vector<float> queue = best->stepsQueue->at(i);
+        printf("x: %d y: %d anglulo: %d distancia: %d\n",queue.at(0),queue.at(1),queue.at(2),queue.at(3));
+    }*/
 
     //DRIVER CODE
     /*

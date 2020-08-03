@@ -18,9 +18,9 @@ public:
     std::vector<Individual*> population;
     void generateInitialPopulation();
     void fitness();
-    void crossover();
+    Individual* crossover();
     int killIndividuals();
-    void start();
+    Individual* start();
 };
 
 

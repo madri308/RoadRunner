@@ -42,8 +42,8 @@ std::vector<Configuration*> ConfigurationTester::generateConfigurations() {
         int sensorsQuantity = (rand() % sensorsQuantityRange.at(1)) + sensorsQuantityRange.at(0);
         int generationQuantity = (rand() % generationQuantityRange.at(1)) + generationQuantityRange.at(0);
         int killPercentage = (rand() % killPercentageRange.at(1)) + killPercentageRange.at(0);
-        Configuration *configuration = new Configuration(populationLength,sensorsQuantity,generationQuantity,killPercentage);
-        configurationsList.push_back(configuration);
+        //Configuration *configuration = new Configuration(populationLength,sensorsQuantity,generationQuantity,killPercentage);
+        //configurationsList.push_back(configuration);
     }
     return configurationsList;
 }

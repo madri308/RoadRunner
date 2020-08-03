@@ -5,6 +5,7 @@
 #include <fstream>
 #include <sstream>
 #include <iterator>
+#include <random>
 #include "iConstants.h"
 
 void iConstants::getLimits() {
@@ -23,11 +24,6 @@ void iConstants::getLimits() {
 }
 
 void iConstants::printLimits() {
-    /*
-    for (auto x : LIMIT_POINTS)
-        std::cout << x.first << ": "
-             << x.second << std::endl;*/
-
     for(int x = 1 ; x<=1800 ; x++){
         auto pairs = LIMIT_POINTS.equal_range(x);
         for(auto pair = pairs.first ; pair != pairs.second ; pair++){
@@ -35,4 +31,14 @@ void iConstants::printLimits() {
         }
         std::cout<<std::endl;
     }
+}
+
+iConstants::iConstants() {
+}
+
+float iConstants::getRandom(float a , float b) {
+    //std::random_device rd; // obtain a random number from hardware
+    static std::mt19937 generator(std::random_device{}()); // seed the generator
+    std::uniform_int_distribution<> distr(a, b); // define the range
+    return distr(generator);
 }

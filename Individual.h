@@ -9,14 +9,15 @@
 
 class Individual {
 public:
-    std::vector<std::vector<float>> *stepsQueue;
     Individual();
     void setStepsQueue(std::vector<std::vector<float>> *queue);
+    void addSensor(float sensor);
+    void addPosition(std::vector<float> position);
+    std::vector<std::vector<float>> *stepsQueue;
     std::vector<float> position;
     std::vector<std::vector<float>> sensors;
     float fitness = 0;
-    void addSensor(float sensor);
-    void addPosition(std::vector<float> position);
+    float frontDirection;
 };
 
 

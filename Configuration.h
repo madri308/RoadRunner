@@ -10,11 +10,12 @@
 
 class Configuration {
 public:
-    Configuration(int populationLength, int sensorsQuantity, int generationQuantity, float killPercentage);
+    Configuration(int populationLength, int sensorsQuantity, int generationQuantity, float killPercentage, std::vector<float> sensorRange);
     int populationLength;
     int sensorsQuantity;
     int generationQuantity;
     float killPercentage;
+    std::vector<float> sensorRange;
 };
 
 
