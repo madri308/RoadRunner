@@ -1,5 +1,3 @@
-#pragma clang diagnostic push
-#pragma ide diagnostic ignored "openmp-use-default-none"
 #include <iostream>
 #include <algorithm>
 #include <iostream>
@@ -8,7 +6,7 @@
 #include <cstdlib>
 #include <omp.h>
 #include "Instructions.h"
-#include "ConfigurationTester.h"
+#include "Matroid.h"
 int mayor = 0;
 void Hello(int n){
     int my_rank = omp_get_thread_num();
@@ -75,12 +73,14 @@ int main(int argc,char* argv[]) {
     /*iConstants *iconstants = new iConstants();
     iconstants->getLimits();
     iconstants->printLimits();*/
-    srand((int)time(0));
 
-    Configuration *configuration = new Configuration(4,3,2,50,{10,160});
+    /*
+    Configuration *configuration = new Configuration(4,5,2,50,{10,160});
     GeneticAlgorithm *ga = new GeneticAlgorithm(configuration);
     //printf("poblacion: %d sensores: %d generaciones: %d muerte: %f\n",ga->configuration->populationLength,ga->configuration->sensorsQuantity,ga->configuration->generationQuantity,ga->configuration->killPercentage);
     Individual *best = ga->start();
+     */
+
     //std::cout<<ga->population.size()<<std::endl;
     /*for(int i = 0 ; i < best->stepsQueue->size() ; i++){
         std::vector<float> queue = best->stepsQueue->at(i);
@@ -88,9 +88,10 @@ int main(int argc,char* argv[]) {
     }*/
 
     //DRIVER CODE
-    /*
-    ConfigurationTester *configurationTester = new ConfigurationTester();
-    configurationTester->test();*/
+    Matroid *m = new Matroid();
+    m->fillConfigurationsList();//Lleno S: Voraz
+    m->getBestConfiguration();//Consigo I: Paralelismo
+    Instructions *instructions = new Instructions(m->bestGeneticAlgorithm->winner->stepsQueue);
+    instructions->createTxt();
 }
 
-#pragma clang diagnostic pop

@@ -5,7 +5,7 @@
 #include <iterator>
 #include "Instructions.h"
 
-Instructions::Instructions(std::vector<std::vector<float>> instructions) {
+Instructions::Instructions(std::vector<std::vector<float>> *instructions) {
     this->instructions = instructions;
 }
 

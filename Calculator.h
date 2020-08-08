@@ -3,7 +3,7 @@
 
 #include <iostream>
 #include <vector>
-#include <math.h>
+#include <cmath>
 #include "iConstants.h"
 
 class Calculator:public iConstants {

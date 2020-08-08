@@ -5,8 +5,7 @@
 #include <algorithm>
 #include <cstdlib>
 #include "GeneticAlgorithm.h"
-//Genera la poblacion inicial con sus respectivos
-//sensores aleatorios y posicion inicial.
+//Genera la poblacion inicial con sus respectivos sensores aleatorios y posicion inicial.
 void GeneticAlgorithm::generateInitialPopulation() {
     //Itera por la cantidad de poblacion.
     for(int individualID = 0 ; individualID < configuration->populationLength; individualID++){
@@ -26,8 +25,8 @@ void GeneticAlgorithm::generateInitialPopulation() {
         population.push_back(initialIndividual);
     }
 }
-//Evalua cada individuo dependiendo de que tanto se pueden movilizar
-//en base a sus sensores. Falta corregir que no solo se trata de movilizacion sino de cercania al final
+//Evalua cada individuo dependiendo de que tanto se pueden movilizar en base a sus sensores.
+//Falta corregir que no solo se trata de movilizacion sino de cercania al final
 void GeneticAlgorithm::fitness() {
     //Itera por la poblacion
     for(int individualID = 0 ; individualID < configuration->populationLength ; individualID++){
@@ -133,6 +132,7 @@ Individual* GeneticAlgorithm::start() {
         fitness();
         individualsKilled = killIndividuals();
         best = crossover();
+        //mutar.
     }
     return best;
 }

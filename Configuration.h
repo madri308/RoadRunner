@@ -5,7 +5,6 @@
 #ifndef ROADRUNNER_CONFIGURATION_H
 #define ROADRUNNER_CONFIGURATION_H
 
-
 #include <vector>
 
 class Configuration {

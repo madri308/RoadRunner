@@ -16,11 +16,13 @@ public:
     Configuration *configuration;
     Calculator calculator;
     std::vector<Individual*> population;
+    Individual *winner;
+
+    Individual* crossover();
+    Individual* start();
     void generateInitialPopulation();
     void fitness();
-    Individual* crossover();
     int killIndividuals();
-    Individual* start();
 };
 
 

@@ -9,12 +9,15 @@
 #include "GeneticAlgorithm.h"
 #include <vector>
 
-class Matroid {
+class Matroid:public iConstants {
 public:
     Matroid();
     std::vector<Configuration*> configurationsList;
-    GeneticAlgorithm *bestGeneticAlgorithm;
+    GeneticAlgorithm *bestGeneticAlgorithm{};
     void compareWithBestGA(GeneticAlgorithm *geneticAlgorithm);
+    void fillConfigurationsList();
+    void showConfigurationList();
+    void getBestConfiguration();
 };
 
 

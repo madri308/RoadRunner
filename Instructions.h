@@ -13,7 +13,7 @@
 class Instructions {
 public:
     std::vector<std::vector<float>> instructions;
-    Instructions(std::vector<std::vector<float>> instructions);
+    Instructions(std::vector<std::vector<float>> *instructions);
     void createTxt();
 };
 
