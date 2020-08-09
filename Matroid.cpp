@@ -27,19 +27,21 @@ void Matroid::fillConfigurationsList() {
                                              ,GENERATION_QUANTITY_RANGE
                                              ,KILL_PERCENTAGE_RANGE
                                              ,MAX_SENSORS_ANGLE_RANGE
-                                             ,MIN_SENSORS_ANGLE_RANGE};
+                                             ,MIN_SENSORS_ANGLE_RANGE
+                                             ,SECURITY_DISTANCE};
     std::vector<std::vector<int>>evaluationCriteria{{POPULATION_LENGTH_RANGE.at(1)-100,POPULATION_LENGTH_RANGE.at(1)}
                                                     ,{SENSORS_QUANTITY_RANGE.at(1)-5,SENSORS_QUANTITY_RANGE.at(1)}
                                                     ,{GENERATION_QUANTITY_RANGE.at(1)-100,GENERATION_QUANTITY_RANGE.at(1)}
                                                     ,{((KILL_PERCENTAGE_RANGE.at(1)-KILL_PERCENTAGE_RANGE.at(0))/2)-15,((KILL_PERCENTAGE_RANGE.at(1)-KILL_PERCENTAGE_RANGE.at(0))/2)+15}
                                                     ,{((MAX_SENSORS_ANGLE_RANGE.at(1)-MAX_SENSORS_ANGLE_RANGE.at(0))/2),((MAX_SENSORS_ANGLE_RANGE.at(1)-MAX_SENSORS_ANGLE_RANGE.at(0))/2)+50}
-                                                    ,{((MIN_SENSORS_ANGLE_RANGE.at(1)-MIN_SENSORS_ANGLE_RANGE.at(0))/2)-50,((MIN_SENSORS_ANGLE_RANGE.at(1)-MIN_SENSORS_ANGLE_RANGE.at(0))/2)}};
+                                                    ,{((MIN_SENSORS_ANGLE_RANGE.at(1)-MIN_SENSORS_ANGLE_RANGE.at(0))/2)-50,((MIN_SENSORS_ANGLE_RANGE.at(1)-MIN_SENSORS_ANGLE_RANGE.at(0))/2)}
+                                                    ,{(SECURITY_DISTANCE.at(0)),(SECURITY_DISTANCE.at(0)+50)}};
     for(int i = 0 ; i <evaluationCriteria.size() ; i++){
         std::cout<<evaluationCriteria.at(i).at(0)<<" - "<<evaluationCriteria.at(i).at(1)<<std::endl;
     }
 
     //poblaciones,sensores,generaciones,porcentajeMuerte,maxRangoAnguloSensores,minRangoAnguloSensores
-    std::vector<std::vector<int>> configsData{{},{},{},{},{},{}};
+    std::vector<std::vector<int>> configsData{{},{},{},{},{},{},{}};
     for(int etapa = 0 ; etapa < configsRange.size() ; etapa++){
         while(configsData.at(etapa).size()<CONFIGURATIONS_QUANTITY){
             int value = getRandom(configsRange.at(etapa).at(0),configsRange.at(etapa).at(1));
@@ -53,7 +55,7 @@ void Matroid::fillConfigurationsList() {
         for(int configType = 0 ; configType < configsData.size() ; configType++){
             data.push_back(configsData.at(configType).at(valuePosition));
         }
-        Configuration *newConfiguration = new Configuration(data.at(0),data.at(1),data.at(2),data.at(3),{(float)data.at(5),(float)data.at(4)});
+        Configuration *newConfiguration = new Configuration(data.at(0),data.at(1),data.at(2),data.at(3),{(float)data.at(5),(float)data.at(4)},data.at(6));
         this->configurationsList.push_back(newConfiguration);
     }
     showConfigurationList();
@@ -67,6 +69,7 @@ void Matroid::showConfigurationList() {
         std::cout<<"generaciones: "<<this->configurationsList.at(config)->generationQuantity<<std::endl;
         std::cout<<"porcentaje de muerte: "<<this->configurationsList.at(config)->killPercentage<<std::endl;
         std::cout<<"rango sensores: "<<this->configurationsList.at(config)->sensorRange.at(0)<<"-"<<this->configurationsList.at(config)->sensorRange.at(1)<<std::endl;
+        std::cout<<"distancia antes limite: "<<this->configurationsList.at(config)->securityDistance<<std::endl;
     }
 }
 

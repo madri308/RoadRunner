@@ -75,7 +75,7 @@ int main(int argc,char* argv[]) {
     iconstants->printLimits();*/
 
 
-    Configuration *configuration = new Configuration(1,1,1,50,{5,175});
+    Configuration *configuration = new Configuration(3,3,2,50,{5,175},20);
     GeneticAlgorithm *ga = new GeneticAlgorithm(configuration);
     //printf("poblacion: %d sensores: %d generaciones: %d muerte: %f\n",ga->configuration->populationLength,ga->configuration->sensorsQuantity,ga->configuration->generationQuantity,ga->configuration->killPercentage);
     Individual *best = ga->start();

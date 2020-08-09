@@ -9,17 +9,13 @@ Calculator::Calculator() {
 }
 //Calcula la distancia entre un punto y el limite, evaluando todos los puntos de la linea
 //con los puntos del limite, hasta que lo ecnuentre entonces saca distancia entre puntos.
-float Calculator::calculateDistanceToLimit(float angle, std::vector<float> point, float originalDirection) {
+float Calculator::calculateDistanceToLimit(float angle, std::vector<float> point, float originalDirection,int securityDistance) {
     float backUp = 0;
-    float angleAdapted = angle+originalDirection-90; //Adapta el angulo dependiendo de la direccion de mi individuo.
-    //GUARDA PUNTO INICIAL Y FINAL DE LA LINEA.
-    //std::cout<<"AnguloOriginal:"<<angle<<" AnguloAdaptado:"<<angleAdapted<<std::endl;
-    std::vector<float> startPoint = point;
-    //std::cout<<"PuntoInicial: "<<startPoint.at(0)<<", "<<startPoint.at(1)<<std::endl;
-    std::vector<float> endPoint = calculateNewPosition(startPoint,angleAdapted,MAX_SIZE_LINE);
-    //std::cout<<"PuntoFinal: "<<endPoint.at(0)<<", "<<endPoint.at(1)<<std::endl;
+    float angleAdapted = angle+originalDirection-90;
 
-    //SACA LOS COMPONENTES DE LA FUNCION DE LA LINEA.
+    std::vector<float> startPoint = point;
+    std::vector<float> endPoint = calculateNewPosition(startPoint,angleAdapted,MAX_SIZE_LINE);
+
     float slope = (startPoint.at(1)-endPoint.at(1))/(startPoint.at(0)-endPoint.at(0));
     float b = startPoint.at(1) - startPoint.at(0)*slope;
 
@@ -27,15 +23,14 @@ float Calculator::calculateDistanceToLimit(float angle, std::vector<float> point
     int endX = std::max(startPoint.at(0),endPoint.at(0));
     for(int x = initialX ; x<=endX ; x++){
         int y = slope*x + b;
-        std::vector<std::vector<int>>corners{{x+individualSize,y+individualSize}
-                                            ,{x-individualSize,y-individualSize}
-                                            ,{x+individualSize,y-individualSize}
-                                            ,{x-individualSize,y+individualSize}};
+        std::vector<std::vector<int>>corners{{x+securityDistance,y+securityDistance}
+                                            ,{x-securityDistance,y-securityDistance}
+                                            ,{x+securityDistance,y-securityDistance}
+                                            ,{x-securityDistance,y+securityDistance}};
         for(std::vector<int>corner:corners){
             auto pairs = LIMIT_POINTS.equal_range(corner.at(0));
             for(auto pair = pairs.first ; pair != pairs.second ; pair++){
                 if(pair->second == corner.at(1)){
-                    //std::cout<<"PuntoLimite: "<<pair->first<<", "<<pair->second<<std::endl;
                     return sqrt(pow((x-startPoint.at(0)),2) + pow((y-startPoint.at(1)),2));
                 }else if(pair->second+3 > y && pair->second-3 < y){
                     backUp = sqrt(pow((x-startPoint.at(0)),2) + pow((y-startPoint.at(1)),2));

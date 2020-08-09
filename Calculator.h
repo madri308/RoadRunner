@@ -9,7 +9,7 @@
 class Calculator:public iConstants {
 public:
     Calculator();
-    float calculateDistanceToLimit(float angle,std::vector<float> point,float originalDirection);
+    float calculateDistanceToLimit(float angle,std::vector<float> point,float originalDirection,int securityDistance);
     std::vector<float> calculateNewPosition(std::vector<float> point , float angle , float distance);
 };
 
