@@ -17,7 +17,7 @@ void Instructions::createTxt() {
     std::string year = std::to_string(1900+ltm->tm_year);
     std::string name = "../run_"+day+"-"+month+"-"+year+"_EstebanMadrigal.txt";
     std::ofstream output_file(name);
-    for(int instruction = 0 ; instruction < instructions.size() ; instruction++){
-        output_file <<instructions.at(instruction).at(0)<<","<<instructions.at(instruction).at(1)<< std::endl;
+    for(int instruction = 0 ; instruction < instructions->size() ; instruction++){
+        output_file <<instructions->at(instruction).at(0)<<","<<instructions->at(instruction).at(1)<< std::endl;
     }
 }

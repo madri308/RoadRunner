@@ -74,24 +74,23 @@ int main(int argc,char* argv[]) {
     iconstants->getLimits();
     iconstants->printLimits();*/
 
-    /*
-    Configuration *configuration = new Configuration(4,5,2,50,{10,160});
+
+    Configuration *configuration = new Configuration(1,1,1,50,{5,175});
     GeneticAlgorithm *ga = new GeneticAlgorithm(configuration);
     //printf("poblacion: %d sensores: %d generaciones: %d muerte: %f\n",ga->configuration->populationLength,ga->configuration->sensorsQuantity,ga->configuration->generationQuantity,ga->configuration->killPercentage);
     Individual *best = ga->start();
-     */
 
-    //std::cout<<ga->population.size()<<std::endl;
-    /*for(int i = 0 ; i < best->stepsQueue->size() ; i++){
+    /*
+    for(int i = 0 ; i < best->stepsQueue->size() ; i++){
         std::vector<float> queue = best->stepsQueue->at(i);
         printf("x: %d y: %d anglulo: %d distancia: %d\n",queue.at(0),queue.at(1),queue.at(2),queue.at(3));
     }*/
 
-    //DRIVER CODE
+    /*//DRIVER CODE
     Matroid *m = new Matroid();
     m->fillConfigurationsList();//Lleno S: Voraz
     m->getBestConfiguration();//Consigo I: Paralelismo
     Instructions *instructions = new Instructions(m->bestGeneticAlgorithm->winner->stepsQueue);
-    instructions->createTxt();
+    instructions->createTxt();*/
 }
 

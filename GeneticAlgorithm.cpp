@@ -28,23 +28,16 @@ void GeneticAlgorithm::generateInitialPopulation() {
 //Evalua cada individuo dependiendo de que tanto se pueden movilizar en base a sus sensores.
 //Falta corregir que no solo se trata de movilizacion sino de cercania al final
 void GeneticAlgorithm::fitness() {
-    //Itera por la poblacion
-    for(int individualID = 0 ; individualID < configuration->populationLength ; individualID++){
-        std::cout<<"==FITNESS:"<<std::endl;
-        Individual *individual = population.at(individualID);//Consigue un individuo
-        std::cout<<"Individuo#"<<individualID<<
-                    "\nPosicion: "<<individual->position.at(0)<<", "<<individual->position.at(1)<<
-                    "\nDireccion: "<<individual->frontDirection<<std::endl;
-        for(int sensorID = 0 ; sensorID < individual->sensors.size() ; sensorID++){ //Itera por sus cromosomas
-            std::vector<float> sensor = individual->sensors.at(sensorID);//Guarda su cromosoma(sensor)
+    for(Individual *individual:population){
+        float fitness = 0;
+        for(std::vector<float> &sensor:individual->sensors){
             //Saca la distancia que mide ese sensor que puede moverse sin chocar
             float distance = calculator.calculateDistanceToLimit(sensor.at(0),individual->position,individual->frontDirection);//FALTA LO DE EVALUAR CON EL FINAL
-            sensor.at(1) = distance;  //Le establece calificacion a ese cromosoma
-            std::cout<<"s"<<sensorID<<": "<<sensor.at(0)<<" calificacion: "<<sensor.at(1)<<std::endl;
-            //La calificacion del individuo es la sumatoria de distancias de los sensores.
-            individual->fitness += distance;
+            sensor.at(1) = distance; //Le establece calificacion a ese cromosoma
+            fitness += distance; //La calificacion del individuo es la sumatoria de distancias de los sensores.
+            //std::cout<<"s:"<<sensor.at(0)<<" calificacion: "<<sensor.at(1)<<std::endl;
         }
-        std::cout<<"Calificacion individuo#"<<individualID<<": "<<individual->fitness<<"\n"<<std::endl;
+        individual->fitness = fitness;
     }
 }
 //Cruza dos individuos aleatorios, genera un random entre los senores
@@ -53,7 +46,7 @@ void GeneticAlgorithm::fitness() {
 Individual * GeneticAlgorithm::crossover() {
     //For por la cantidad de individuos necesarios.
     //Por cada iteracion genera un hijo.
-    std::cout<<"==CROSSOVER:"<<std::endl;
+    //std::cout<<"==CROSSOVER:"<<std::endl;
     for(int newIndividualID = 0 ; newIndividualID < individualsKilled ; newIndividualID++){
         //Selecciono dos individuos randoms.
         Individual *parentA = population.at((rand() % population.size()) + 0);
@@ -85,8 +78,7 @@ Individual * GeneticAlgorithm::crossover() {
             float minSensor = std::min(sensorsA.at(sensorID).at(0),sensorsB.at(sensorID).at(0));
             float maxSensor = std::max(sensorsA.at(sensorID).at(0),sensorsB.at(sensorID).at(0));
             float newSensor = getRandom(minSensor,maxSensor);
-            //float newSensor = (rand() % int(maxSensor)) + minSensor;
-            std::cout<<"\nsPadre1: "<< minSensor<<", sPadre2: "<<maxSensor<<", sHijo:"<<newSensor<<std::endl;
+            //std::cout<<"\nsPadre1: "<< minSensor<<", sPadre2: "<<maxSensor<<", sHijo:"<<newSensor<<std::endl;
 
             newIndividual->addSensor(newSensor); //Se inserta a mi nuevo individuo ese sensor.
 
@@ -105,7 +97,6 @@ Individual * GeneticAlgorithm::crossover() {
         std::vector<float> newPosition = calculator.calculateNewPosition(bestParent->position,forQueue.at(2)+bestParent->frontDirection-90,forQueue.at(3));
         newIndividual->addPosition(newPosition);    //Le digo al nuevo individuo su posicion.
         newIndividual->frontDirection = forQueue.at(2);     //Le digo al nuevo individuo hacia donde apunta.
-        std::cout<<"posicionHijo: "<<newPosition.at(0)<<", "<<newPosition.at(1)<<"\ndireccionHijo: "<<forQueue.at(2)<<std::endl;
         bestParent->stepsQueue->push_back(forQueue);    //Guarda el paso en la cola.
         newIndividual->setStepsQueue(bestParent->stepsQueue);   //Cola del nuevo individuo es la del mejor papa
         population.push_back(newIndividual);    //Lo inserto en la poblacion
@@ -119,19 +110,24 @@ Individual * GeneticAlgorithm::crossover() {
 //Elimina cierto porcentaje de individuos.
 int GeneticAlgorithm::killIndividuals() {
     int killedAmount = configuration->populationLength*configuration->killPercentage/100;
-    std::cout<<"-> poblacion:"<<population.size()<<" asesinados:"<<killedAmount<<"\n"<<std::endl;
+    std::cout<<"\n-> poblacion:"<<population.size()<<" asesinados:"<<killedAmount<<std::endl;
+    std::sort(population.begin(),population.end(),[](Individual *A,Individual *B){
+        return A->fitness > B->fitness;
+    });
     population.erase(population.end()-killedAmount,population.end());
     return killedAmount;
 }
 //Empieza el genetico.
 Individual* GeneticAlgorithm::start() {
     generateInitialPopulation();
+
     Individual *best = nullptr;
-    for(int generation = 0 ; generation < configuration->generationQuantity /*&& best == nullptr*/; generation++){
-        std::cout<<"\n=======GENERACION#"<<generation<<"======"<<std::endl;
+    for(int generation = 0 ; generation < 3/*configuration->generationQuantity && best == nullptr*/; generation++){
+        std::cout<<"=======GENERACION#"<<generation<<"======"<<std::endl;
         fitness();
+        showPopulation();
         individualsKilled = killIndividuals();
-        best = crossover();
+        //best = crossover();
         //mutar.
     }
     return best;
@@ -139,4 +135,13 @@ Individual* GeneticAlgorithm::start() {
 //Construye el objeto, recibe las configuraciones con las que trabajara.
 GeneticAlgorithm::GeneticAlgorithm(Configuration *configuration) {
     this->configuration = configuration;
+}
+
+void GeneticAlgorithm::showPopulation() {
+    for(Individual *individual:this->population){
+        std::cout<<"Individuo:\n"<<"  Pos: "<<individual->position.at(0)<<", "<<individual->position.at(1)<<"\n  Calif: "<<individual->fitness<<std::endl;
+        for(std::vector<float>sensor:individual->sensors){
+            std::cout<<"  S -> ang: "<<sensor.at(0)<<" calif:"<<sensor.at(1)<<std::endl;
+        }
+    }
 }

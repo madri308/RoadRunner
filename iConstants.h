@@ -26,6 +26,7 @@ public:
     std::vector<int> KILL_PERCENTAGE_RANGE{10,100};
     std::vector<int> MAX_SENSORS_ANGLE_RANGE{0,180};
     std::vector<int> MIN_SENSORS_ANGLE_RANGE{0,180};
+    int individualSize = 12;
 };
 
 

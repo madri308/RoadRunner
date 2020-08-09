@@ -23,6 +23,7 @@ public:
     void generateInitialPopulation();
     void fitness();
     int killIndividuals();
+    void showPopulation();
 };
 
 
