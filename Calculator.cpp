@@ -11,10 +11,9 @@ Calculator::Calculator() {
 //con los puntos del limite, hasta que lo ecnuentre entonces saca distancia entre puntos.
 float Calculator::calculateDistanceToLimit(float angle, std::vector<float> point, float originalDirection,int securityDistance) {
     float backUp = 0;
-    float angleAdapted = angle+originalDirection-90;
 
     std::vector<float> startPoint = point;
-    std::vector<float> endPoint = calculateNewPosition(startPoint,angleAdapted,MAX_SIZE_LINE);
+    std::vector<float> endPoint = calculateNewPosition(startPoint,angle,MAX_SIZE_LINE,originalDirection);
 
     float slope = (startPoint.at(1)-endPoint.at(1))/(startPoint.at(0)-endPoint.at(0));
     float b = startPoint.at(1) - startPoint.at(0)*slope;
@@ -43,8 +42,13 @@ float Calculator::calculateDistanceToLimit(float angle, std::vector<float> point
 //Calcula un nuevo punto en base a un punto inicial, un angulo y una distancia con
 //razones trigonometricas.
 // https://stackoverflow.com/questions/50311279/how-can-i-find-end-point-using-start-point-angle-and-distance/50318756#50318756
-std::vector<float> Calculator::calculateNewPosition(std::vector<float> point, float angle, float distance) {
-    float normalizedAngle = angle-90; //Esto se hace porque el rango original es de -90 a 90, no de 0 a 180
+std::vector<float> Calculator::calculateNewPosition(std::vector<float> point, float angle, float distance, float originalDirection) {
+    float angleAdapted = angle-90+originalDirection;
+    float normalizedAngle = angleAdapted-90;//Esto se hace porque el rango original es de -90 a 90, no de 0 a 180
+    /*std::cout<<"Angulo normal:"<<angle<<std::endl;
+    std::cout<<"Diferencia:"<<originalDirection-90<<std::endl;
+    std::cout<<"Angulo adaptado:"<<angleAdapted<<std::endl;
+    std::cout<<"Angulo normalizado:"<<normalizedAngle<<"\n"<<std::endl;*/
     float angle_rad = normalizedAngle * 3.1415927f / 180.0f;
     float oppositeSide = sin(angle_rad)*distance;
     float adjacentSide = cos(angle_rad)*distance;

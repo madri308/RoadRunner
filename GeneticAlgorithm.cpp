@@ -91,10 +91,10 @@ Individual * GeneticAlgorithm::crossover() {
                 forQueue.at(3) = distance;//distancia
             }
         }
-        //Establezco la nueva posicion del nuevo individuo con el mejor sensor y el mejor padre
-        std::vector<float> newPosition = calculator.calculateNewPosition(bestParent->position,forQueue.at(2)+bestParent->frontDirection-90,forQueue.at(3));
-        newIndividual->addPosition(newPosition);    //Le digo al nuevo individuo su posicion.
         newIndividual->frontDirection = forQueue.at(2);     //Le digo al nuevo individuo hacia donde apunta.
+        //Establezco la nueva posicion del nuevo individuo con el mejor sensor y el mejor padre
+        std::vector<float> newPosition = calculator.calculateNewPosition(bestParent->position,forQueue.at(2),forQueue.at(3),newIndividual->frontDirection);
+        newIndividual->addPosition(newPosition);    //Le digo al nuevo individuo su posicion.
         bestParent->stepsQueue->push_back(forQueue);    //Guarda el paso en la cola.
         newIndividual->setStepsQueue(bestParent->stepsQueue);   //Cola del nuevo individuo es la del mejor papa
         population.push_back(newIndividual);    //Lo inserto en la poblacion
@@ -120,14 +120,15 @@ int GeneticAlgorithm::killIndividuals() {
 Individual* GeneticAlgorithm::start() {
     generateInitialPopulation();
     Individual *best = nullptr;
-    for(int generation = 0 ; generation < 3/*configuration->generationQuantity && best == nullptr*/; generation++){
+    for(int generation = 0 ; /*generation < configuration->generationQuantity && */best == nullptr; generation++){
         std::cout<<"=======GENERACION#"<<generation<<"======"<<std::endl;
         fitness();
-        showPopulation();
         individualsKilled = killIndividuals();
         best = crossover();
+        //showPopulation();
         //mutar.
     }
+
     return best;
 }
 
