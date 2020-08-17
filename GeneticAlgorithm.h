@@ -19,11 +19,12 @@ public:
     Individual *winner;
 
     Individual* crossover();
-    Individual* start();
+    void start();
     void generateInitialPopulation();
     void fitness();
+    void mutate();
     int killIndividuals();
-    void showPopulation();
+    void showPopulation(int generation);
 };
 
 

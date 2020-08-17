@@ -15,7 +15,7 @@ public:
     std::vector<Configuration*> configurationsList;
     GeneticAlgorithm *bestGeneticAlgorithm{};
     void compareWithBestGA(GeneticAlgorithm *geneticAlgorithm);
-    void fillConfigurationsList();
+    void fillConfigurationsList();//voraz
     void showConfigurationList();
     void getBestConfiguration();
 };

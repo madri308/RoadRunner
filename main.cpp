@@ -74,18 +74,19 @@ int main(int argc,char* argv[]) {
     iconstants->getLimits();
     iconstants->printLimits();*/
 
-
-    /*Configuration *configuration = new Configuration(20,7,50,50,{0,175},20);
+    /*
+    Configuration *configuration = new Configuration(20,7,50,50,{0,175},20);
     GeneticAlgorithm *ga = new GeneticAlgorithm(configuration);
     //printf("poblacion: %d sensores: %d generaciones: %d muerte: %f\n",ga->configuration->populationLength,ga->configuration->sensorsQuantity,ga->configuration->generationQuantity,ga->configuration->killPercentage);
-    Individual *best = ga->start();*/
-
+    ga->start();*/
 
     //DRIVER CODE
     Matroid *m = new Matroid();
     m->fillConfigurationsList();//Lleno S: Voraz
+    //m->showConfigurationList();
     m->getBestConfiguration();//Consigo I: Paralelismo
+    /*
     Instructions *instructions = new Instructions(m->bestGeneticAlgorithm->winner->stepsQueue);
-    instructions->createTxt();
+    instructions->createTxt();*/
 }
 

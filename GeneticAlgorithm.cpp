@@ -8,18 +8,14 @@
 
 //Genera la poblacion inicial con sus respectivos sensores aleatorios y posicion inicial.
 void GeneticAlgorithm::generateInitialPopulation() {
-    //Itera por la cantidad de poblacion.
     for(int individualID = 0 ; individualID < configuration->populationLength; individualID++){
-        //Crea un individuo.
         Individual *initialIndividual = new Individual();
         initialIndividual->frontDirection = 90;
         initialIndividual->addPosition(START_POINT);//Le pone su posicion(inicio)
         initialIndividual->setStepsQueue(new std::vector<std::vector<float>>);//Le inicializa una cola
-        //Le establece los senores
         float distribution = (configuration->sensorRange.at(1)-configuration->sensorRange.at(0))/configuration->sensorsQuantity;
         for(int sensor = 0 ; sensor < configuration->sensorsQuantity ; sensor++){
             float newSensor = getRandom(configuration->sensorRange.at(0)+(distribution*sensor),configuration->sensorRange.at(0)+(distribution*(sensor+1)));
-            //float newSensor = getRandom(configuration->sensorRange.at(0),configuration->sensorRange.at(1));
             initialIndividual->addSensor(newSensor);
         }
         population.push_back(initialIndividual);
@@ -108,7 +104,6 @@ Individual * GeneticAlgorithm::crossover() {
 //Elimina cierto porcentaje de individuos.
 int GeneticAlgorithm::killIndividuals() {
     int killedAmount = configuration->populationLength*configuration->killPercentage/100;
-    std::cout<<"\n-> poblacion:"<<population.size()<<" asesinados:"<<killedAmount<<std::endl;
     std::sort(population.begin(),population.end(),[](Individual *A,Individual *B){
         return A->fitness > B->fitness;
     });
@@ -117,31 +112,43 @@ int GeneticAlgorithm::killIndividuals() {
 }
 
 //Empieza el genetico.
-Individual* GeneticAlgorithm::start() {
+void GeneticAlgorithm::start() {
     generateInitialPopulation();
-    Individual *best = nullptr;
-    for(int generation = 0 ; /*generation < configuration->generationQuantity && */best == nullptr; generation++){
-        std::cout<<"=======GENERACION#"<<generation<<"======"<<std::endl;
+    for(int generation = 0 ; generation < configuration->generationQuantity; generation++){
         fitness();
+        //showPopulation(generation);
         individualsKilled = killIndividuals();
-        best = crossover();
-        //showPopulation();
-        //mutar.
+        winner = crossover();
+        mutate();
     }
-
-    return best;
+    for(std::vector<float> step:*winner->stepsQueue){
+        score += step.at(3)/500;
+    }
 }
 
 //Construye el objeto, recibe las configuraciones con las que trabajara.
 GeneticAlgorithm::GeneticAlgorithm(Configuration *configuration) {
     this->configuration = configuration;
+    this->score = 0;
 }
 
-void GeneticAlgorithm::showPopulation() {
+void GeneticAlgorithm::showPopulation(int generation) {
+    std::cout<<"\n->==GENERACION#"<<generation<<std::endl;
     for(Individual *individual:this->population){
         std::cout<<"Individuo:\n"<<"  Pos: "<<individual->position.at(0)<<", "<<individual->position.at(1)<<"\n  Calif: "<<individual->fitness<<"\n  Dir: "<<individual->frontDirection<<std::endl;
         for(std::vector<float>sensor:individual->sensors){
             std::cout<<"  S -> ang: "<<sensor.at(0)<<" calif:"<<sensor.at(1)<<std::endl;
+        }
+    }
+    std::cout<<"\n-> poblacion:"<<population.size()<<" asesinados:"<<this->individualsKilled<<std::endl;
+}
+
+void GeneticAlgorithm::mutate() {
+    for(Individual *individual:this->population){
+        float mutationCheck = getRandom(0.0,10.0);
+        if(mutationCheck<=MUTATE_PERCENTAGE){
+            individual->position.at(0) += MUTATION;
+            individual->position.at(1) += MUTATION;
         }
     }
 }

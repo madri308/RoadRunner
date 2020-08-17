@@ -3,9 +3,12 @@
 //
 
 #include <iterator>
+#include <algorithm>
+#include <iostream>
 #include "Instructions.h"
 
 Instructions::Instructions(std::vector<std::vector<float>> *instructions) {
+    std::reverse(instructions->begin(),instructions->end());
     this->instructions = instructions;
 }
 
@@ -18,6 +21,8 @@ void Instructions::createTxt() {
     std::string name = "../run_"+day+"-"+month+"-"+year+"_EstebanMadrigal.txt";
     std::ofstream output_file(name);
     for(int instruction = 0 ; instruction < instructions->size() ; instruction++){
-        output_file <<instructions->at(instruction).at(0)<<","<<instructions->at(instruction).at(1)<< std::endl;
+        float ms = instructions->at(instruction).at(3)/500;
+        output_file <<instructions->at(instruction).at(2)<<","<<ms<< std::endl;
     }
+    std::cout<<"Archivo creado exitosamente!"<<std::endl;
 }

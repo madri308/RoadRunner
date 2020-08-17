@@ -7,11 +7,14 @@
 #include "Matroid.h"
 
 Matroid::Matroid() {
-
+    this->bestGeneticAlgorithm = nullptr;
 }
 //Compara cual genetico es mejor y lo guarda.
 void Matroid::compareWithBestGA(GeneticAlgorithm *geneticAlgorithm) {
-    if(this->bestGeneticAlgorithm->score < geneticAlgorithm->score){
+    if(this->bestGeneticAlgorithm == nullptr){
+        this->bestGeneticAlgorithm = geneticAlgorithm;
+    }
+    else if(this->bestGeneticAlgorithm->score < geneticAlgorithm->score){
         this->bestGeneticAlgorithm = geneticAlgorithm;
     }
 }
@@ -29,13 +32,13 @@ void Matroid::fillConfigurationsList() {
                                              ,MAX_SENSORS_ANGLE_RANGE
                                              ,MIN_SENSORS_ANGLE_RANGE
                                              ,SECURITY_DISTANCE};
-    std::vector<std::vector<int>>evaluationCriteria{{POPULATION_LENGTH_RANGE.at(1)-100,POPULATION_LENGTH_RANGE.at(1)}
+    std::vector<std::vector<int>>evaluationCriteria{{POPULATION_LENGTH_RANGE.at(0)+5,POPULATION_LENGTH_RANGE.at(1)}
                                                     ,{SENSORS_QUANTITY_RANGE.at(1)-5,SENSORS_QUANTITY_RANGE.at(1)}
                                                     ,{GENERATION_QUANTITY_RANGE.at(1)-100,GENERATION_QUANTITY_RANGE.at(1)}
                                                     ,{((KILL_PERCENTAGE_RANGE.at(1)-KILL_PERCENTAGE_RANGE.at(0))/2)-15,((KILL_PERCENTAGE_RANGE.at(1)-KILL_PERCENTAGE_RANGE.at(0))/2)+15}
                                                     ,{((MAX_SENSORS_ANGLE_RANGE.at(1)-MAX_SENSORS_ANGLE_RANGE.at(0))/2),((MAX_SENSORS_ANGLE_RANGE.at(1)-MAX_SENSORS_ANGLE_RANGE.at(0))/2)+50}
                                                     ,{((MIN_SENSORS_ANGLE_RANGE.at(1)-MIN_SENSORS_ANGLE_RANGE.at(0))/2)-50,((MIN_SENSORS_ANGLE_RANGE.at(1)-MIN_SENSORS_ANGLE_RANGE.at(0))/2)}
-                                                    ,{(SECURITY_DISTANCE.at(0)),(SECURITY_DISTANCE.at(0)+50)}};
+                                                    ,{(SECURITY_DISTANCE.at(0)),(SECURITY_DISTANCE.at(0)+8)}};
     for(int i = 0 ; i <evaluationCriteria.size() ; i++){
         std::cout<<evaluationCriteria.at(i).at(0)<<" - "<<evaluationCriteria.at(i).at(1)<<std::endl;
     }
@@ -58,7 +61,6 @@ void Matroid::fillConfigurationsList() {
         Configuration *newConfiguration = new Configuration(data.at(0),data.at(1),data.at(2),data.at(3),{(float)data.at(5),(float)data.at(4)},data.at(6));
         this->configurationsList.push_back(newConfiguration);
     }
-    showConfigurationList();
 }
 
 void Matroid::showConfigurationList() {
@@ -78,15 +80,14 @@ void Matroid::getBestConfiguration() {
     {
         #pragma omp for ordered schedule(dynamic)//DIVIDE EL TEAM EN PORCIONES DEL LOOP
         for(int configurationID = 0 ; configurationID < CONFIGURATIONS_QUANTITY ; configurationID++){
+            std::cout<<"Probando config #"<<configurationID<<std::endl;
             Configuration *configuration = this->configurationsList.at(configurationID);
             GeneticAlgorithm *geneticAlgorithm = new GeneticAlgorithm(configuration);
             geneticAlgorithm->start();
             #pragma omp ordered
+            std::cout<<"Comparando config #"<<configurationID<<std::endl;
             this->compareWithBestGA(geneticAlgorithm);
         }
     }
 }
-
-
-
 #pragma clang diagnostic pop
